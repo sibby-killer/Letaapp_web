@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import dynamic from 'next/dynamic'
 import { MapPin, Search, Star, Clock } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { CartDrawer } from "@/components/cart/cart-drawer"
+import { useCartStore } from "@/lib/store/cart-store"
+import { Plus } from "lucide-react"
 
 // Dynamically import Map to avoid SSR issues with Leaflet
 const OSMMap = dynamic(() => import('@/components/maps/osm-map'), {
