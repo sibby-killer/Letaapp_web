@@ -75,7 +75,7 @@ To run this project locally:
 
 The application is optimized for deployment on **Vercel**.
 
-[**View Live Demo**](https://leta-app-demo.vercel.app) *(Placeholder)*
+[**View Live Demo**]([https://leta-app-demo.vercel.app](https://letaapp-webv2.vercel.app/)) 
 
 ---
 
