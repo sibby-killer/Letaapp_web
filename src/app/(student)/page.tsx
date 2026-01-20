@@ -3,11 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import dynamic from 'next/dynamic'
-import { MapPin, Search, Star, Clock } from "lucide-react"
+import { MapPin, Search, Star, Clock, Plus } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { useCartStore } from "@/lib/store/cart-store"
-import { Plus } from "lucide-react"
 
 // Dynamically import Map to avoid SSR issues with Leaflet
 const OSMMap = dynamic(() => import('@/components/maps/osm-map'), {
@@ -72,14 +71,42 @@ export default function StudentHome() {
                                     </div>
                                 </div>
                                 <p className="text-sm text-muted-foreground">{store.cuisine}</p>
-                                <p className="text-xs text-primary mt-2 flex items-center gap-1">
-                                    <MapPin className="w-3 h-3" /> Free Delivery
-                                </p>
+                                <div className="flex justify-between items-center mt-3">
+                                    <p className="text-xs text-primary flex items-center gap-1">
+                                        <MapPin className="w-3 h-3" /> Free Delivery
+                                    </p>
+                                    <AddToCartButton store={store} />
+                                </div>
                             </CardContent>
                         </Card>
                     ))}
                 </div>
             </section>
+
+            <CartDrawer />
         </div>
+    )
+}
+
+function AddToCartButton({ store }: { store: any }) {
+    const addItem = useCartStore(state => state.addItem)
+    const toggleCart = useCartStore(state => state.toggleCart)
+
+    const handleAdd = (e: React.MouseEvent) => {
+        e.stopPropagation() // Prevent card click
+        addItem({
+            id: crypto.randomUUID(), // Unique ID for this instance
+            name: "Sample Meal from " + store.name,
+            price: 250,
+            quantity: 1,
+            restaurantId: String(store.id)
+        })
+        toggleCart() // Open cart immediately
+    }
+
+    return (
+        <Button size="sm" className="h-7 text-xs gap-1" onClick={handleAdd}>
+            <Plus className="h-3 w-3" /> Add
+        </Button>
     )
 }
